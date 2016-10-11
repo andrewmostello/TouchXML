@@ -83,9 +83,9 @@
             if (bodyNode)
             xmlDocSetRootElement(theDoc, bodyNode->children);
 
-            _node = (xmlNodePtr)theDoc;
-            NSAssert(_node->_private == NULL, @"TODO");
-            _node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
+            self.node = (xmlNodePtr)theDoc;
+            NSAssert(self.node->_private == NULL, @"TODO");
+            self.node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
 
             if (xpathObject)
             xmlXPathFreeObject (xpathObject);
@@ -138,8 +138,8 @@
 
             if (theDoc != NULL)
                 {
-                _node = (xmlNodePtr)theDoc;
-                _node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
+                self.node = (xmlNodePtr)theDoc;
+                self.node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
                 }
             else
                 {

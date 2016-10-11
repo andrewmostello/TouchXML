@@ -42,14 +42,14 @@
 [self.nodePool addObject:child];
 
 CXMLNode *theCurrentNode = [self.children objectAtIndex:index];
-xmlAddPrevSibling(theCurrentNode->_node, child->_node);
+xmlAddPrevSibling(theCurrentNode.node, child.node);
 }
 
 - (void)addChild:(CXMLNode *)child
 {
 [self.nodePool addObject:child];
 
-xmlAddChild(self->_node, child->_node);
+xmlAddChild(self.node, child.node);
 }
 
 @end

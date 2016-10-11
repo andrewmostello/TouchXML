@@ -43,12 +43,12 @@
 {
 #pragma unused (error)
 
-NSAssert(_node != NULL, @"TODO");
+NSAssert(self.node != NULL, @"TODO");
 
 NSArray *theResult = NULL;
 
-xmlXPathContextPtr theXPathContext = xmlXPathNewContext(_node->doc);
-theXPathContext->node = _node;
+xmlXPathContextPtr theXPathContext = xmlXPathNewContext(self.node->doc);
+theXPathContext->node = self.node;
 
 for (NSString *thePrefix in inNamespaceMappings)
 	{

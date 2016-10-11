@@ -29,6 +29,7 @@
 //  authors and should not be interpreted as representing official policies, either expressed
 //  or implied, of toxicsoftware.com.
 
+#import "CXMLNode_PrivateExtensions.h"
 #import "CXMLNamespaceNode.h"
 
 @implementation CXMLNamespaceNode

@@ -46,6 +46,9 @@ static int MyXmlOutputCloseCallback(void * context);
 
 @implementation CXMLNode
 
+@synthesize node = _node;
+@synthesize freeNodeOnRelease = _freeNodeOnRelease;
+
 - (void)dealloc
 {
 [self invalidate];
@@ -61,6 +64,11 @@ return(theNode);
 }
 
 #pragma mark -
+
+- (xmlNodePtr)node
+{
+    return(_node);
+}
 
 - (CXMLNodeKind)kind
 {

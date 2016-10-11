@@ -44,8 +44,8 @@ if (inLibXMLNode == NULL)
 
 if ((self = [super init]) != NULL)
 	{
-	_node = inLibXMLNode;
-	_freeNodeOnRelease = infreeOnDealloc;
+	self.node = inLibXMLNode;
+	self.freeNodeOnRelease = infreeOnDealloc;
 	}
 return(self);
 }
@@ -71,7 +71,7 @@ return(self);
 
             [[theXMLDocument nodePool] addObject:theNode];
 
-            theNode->_node->_private = (__bridge void *)theNode;
+            theNode.node->_private = (__bridge void *)theNode;
         }
     }
     return(theNode);
@@ -101,22 +101,17 @@ return(self);
     return theClass;
 }
 
-- (xmlNodePtr)node
-{
-return(_node);
-}
-
 - (void)invalidate;
     {
-    if (_node)
+    if (self.node)
         {
-        if (_freeNodeOnRelease)
+        if (self.freeNodeOnRelease)
             {
-            xmlUnlinkNode(_node);
-            xmlFreeNode(_node);
+            xmlUnlinkNode(self.node);
+            xmlFreeNode(self.node);
             }
 
-        _node = NULL;
+        self.node = NULL;
         }
     }
 

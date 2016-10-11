@@ -44,7 +44,7 @@
     // TODO -- native xml api?
     const xmlChar *theName = (const xmlChar *)[name UTF8String];
 
-    xmlNodePtr theCurrentNode = _node->children;
+    xmlNodePtr theCurrentNode = self.node->children;
     while (theCurrentNode != NULL)
         {
         if (theCurrentNode->type == XML_ELEMENT_NODE && xmlStrcmp(theName, theCurrentNode->name) == 0)
@@ -68,7 +68,7 @@
 	const xmlChar *theLocalName = (const xmlChar *)[localName UTF8String];
 	const xmlChar *theNamespaceName = (const xmlChar *)[URI UTF8String];
 	
-	xmlNodePtr theCurrentNode = _node->children;
+	xmlNodePtr theCurrentNode = self.node->children;
 	while (theCurrentNode != NULL)
         {
 		if (theCurrentNode->type == XML_ELEMENT_NODE 
@@ -88,7 +88,7 @@
 - (NSArray *)attributes
     {
     NSMutableArray *theAttributes = [NSMutableArray array];
-    xmlAttrPtr theCurrentNode = _node->properties;
+    xmlAttrPtr theCurrentNode = self.node->properties;
     while (theCurrentNode != NULL)
         {
         CXMLNode *theAttribute = [CXMLNode nodeWithLibXMLNode:(xmlNodePtr)theCurrentNode freeOnDealloc:NO];
@@ -117,7 +117,7 @@
 		theLocalName = (xmlChar *)[name UTF8String];
         }
 	
-	xmlAttrPtr theCurrentNode = _node->properties;
+	xmlAttrPtr theCurrentNode = self.node->properties;
 	while (theCurrentNode != NULL)
         {
 		if (xmlStrcmp(theLocalName, theCurrentNode->name) == 0)
@@ -146,7 +146,7 @@
 	const xmlChar *theLocalName = (const xmlChar *)[localName UTF8String];
 	const xmlChar *theNamespaceName = (const xmlChar *)[URI UTF8String];
 	
-	xmlAttrPtr theCurrentNode = _node->properties;
+	xmlAttrPtr theCurrentNode = self.node->properties;
 	while (theCurrentNode != NULL)
         {
 		if (theCurrentNode->ns && theCurrentNode->ns->href &&
@@ -164,7 +164,7 @@
 - (NSArray *)namespaces
     {
 	NSMutableArray *theNamespaces = [[NSMutableArray alloc] init];
-	xmlNsPtr theCurrentNamespace = _node->nsDef;
+	xmlNsPtr theCurrentNamespace = self.node->nsDef;
 	
 	while (theCurrentNamespace != NULL)
         {
@@ -182,7 +182,7 @@
 - (CXMLNode *)namespaceForPrefix:(NSString *)name
     {
 	const xmlChar *thePrefix = (const xmlChar *)[name UTF8String];
-	xmlNsPtr theCurrentNamespace = _node->nsDef;
+	xmlNsPtr theCurrentNamespace = self.node->nsDef;
 	
 	while (theCurrentNamespace != NULL)
         {
@@ -204,7 +204,7 @@
 	if (split.length > 0)
 		return [self namespaceForPrefix:[name substringToIndex:split.location]];
 	
-	xmlNsPtr theCurrentNamespace = _node->nsDef;
+	xmlNsPtr theCurrentNamespace = self.node->nsDef;
 	
 	while (theCurrentNamespace != NULL)
 	{
@@ -225,7 +225,7 @@
 {
 	const xmlChar *theXMLURI = (const xmlChar *)[namespaceURI UTF8String];
 	
-	xmlNsPtr theCurrentNamespace = _node->nsDef;
+	xmlNsPtr theCurrentNamespace = self.node->nsDef;
 	
 	while (theCurrentNamespace != NULL)
 	{
@@ -283,9 +283,9 @@
 
 - (NSString *)description
 {
-	NSAssert(_node != NULL, @"TODO");
+	NSAssert(self.node != NULL, @"TODO");
 	
-	return([NSString stringWithFormat:@"<%@ %p [%p] %@ %@>", NSStringFromClass([self class]), self, self->_node, [self name], [self XMLStringWithOptions:0]]);
+	return([NSString stringWithFormat:@"<%@ %p [%p] %@ %@>", NSStringFromClass([self class]), self, self.node, [self name], [self XMLStringWithOptions:0]]);
 }
 
 @end

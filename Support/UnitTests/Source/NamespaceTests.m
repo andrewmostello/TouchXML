@@ -34,6 +34,7 @@
 #import "CXMLDocument.h"
 #import "CXMLElement.h"
 #import "CXMLNode.h"
+#import "CXMLNode_PrivateExtensions.h"
 
 @implementation NamespaceTests 
 	
@@ -122,7 +123,7 @@ NSString *simpleDocument()
 //
 //--------------------------------------------------------------------------
 
-NSString *stringValueOfCXMLNodeKind(CXMLNodeKind kind) 
+NSString *stringValueOfCXMLNodeKind(CXMLNodeKind kind)
 {
 	if (kind == CXMLInvalidKind) return @"InvalidKind";
 	if (kind == CXMLElementKind) return @"ElementKind";

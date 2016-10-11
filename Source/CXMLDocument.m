@@ -71,9 +71,9 @@
             xmlDocPtr theDoc = xmlParseDoc((xmlChar *)[inString UTF8String]);
             if (theDoc != NULL)
             {
-                _node = (xmlNodePtr)theDoc;
-                NSAssert(_node->_private == NULL, @"TODO");
-                _node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
+                self.node = (xmlNodePtr)theDoc;
+                NSAssert(self.node->_private == NULL, @"TODO");
+                self.node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
             }
             else
             {
@@ -150,8 +150,8 @@
             
             if (theDoc != NULL && xmlDocGetRootElement(theDoc) != NULL)
             {
-                _node = (xmlNodePtr)theDoc;
-                _node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
+                self.node = (xmlNodePtr)theDoc;
+                self.node->_private = (__bridge void *)self; // Note. NOT retained (TODO think more about _private usage)
             }
             else
             {
@@ -210,9 +210,9 @@
         
     }
     //
-    xmlUnlinkNode(_node);
-    xmlFreeDoc((xmlDocPtr)_node);
-    _node = NULL;
+    xmlUnlinkNode(self.node);
+    xmlFreeDoc((xmlDocPtr)self.node);
+    self.node = NULL;
 }
 
 //- (NSString *)characterEncoding;
@@ -224,7 +224,7 @@
 
 - (CXMLElement *)rootElement
 {
-    xmlNodePtr theLibXMLNode = xmlDocGetRootElement((xmlDocPtr)_node);	
+    xmlNodePtr theLibXMLNode = xmlDocGetRootElement((xmlDocPtr)self.node);
     return([CXMLNode nodeWithLibXMLNode:theLibXMLNode freeOnDealloc:NO]);
 }
 
@@ -238,7 +238,7 @@
 #pragma unused (options)
     xmlChar *theBuffer = NULL;
     int theBufferSize = 0;
-    xmlDocDumpMemory((xmlDocPtr)self->_node, &theBuffer, &theBufferSize);
+    xmlDocDumpMemory((xmlDocPtr)self.node, &theBuffer, &theBufferSize);
     
     NSData *theData = [NSData dataWithBytes:theBuffer length:theBufferSize];
     
@@ -260,13 +260,13 @@
 
 - (NSString *)description
 {
-    NSAssert(_node != NULL, @"TODO");
+    NSAssert(self.node != NULL, @"TODO");
     
-    NSMutableString *result = [NSMutableString stringWithFormat:@"<%@ %p [%p]> ", NSStringFromClass([self class]), self, self->_node];
+    NSMutableString *result = [NSMutableString stringWithFormat:@"<%@ %p [%p]> ", NSStringFromClass([self class]), self, self.node];
     xmlChar *xmlbuff;
     int buffersize;
     
-    xmlDocDumpFormatMemory((xmlDocPtr)(self->_node), &xmlbuff, &buffersize, 1);
+    xmlDocDumpFormatMemory((xmlDocPtr)(self.node), &xmlbuff, &buffersize, 1);
     NSString *dump = [[NSString alloc] initWithBytes:xmlbuff length:buffersize encoding:NSUTF8StringEncoding];
     xmlFree(xmlbuff);
     
