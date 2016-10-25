@@ -33,26 +33,8 @@
 
 #include <libxml/tree.h>
 
-typedef enum {
-    CXMLInvalidKind = 0,
-    CXMLElementKind = XML_ELEMENT_NODE,
-    CXMLAttributeKind = XML_ATTRIBUTE_NODE,
-    CXMLTextKind = XML_TEXT_NODE,
-    CXMLProcessingInstructionKind = XML_PI_NODE,
-    CXMLCommentKind = XML_COMMENT_NODE,
-    CXMLNotationDeclarationKind = XML_NOTATION_NODE,
-    CXMLDTDKind = XML_DTD_NODE,
-    CXMLElementDeclarationKind =  XML_ELEMENT_DECL,
-    CXMLAttributeDeclarationKind =  XML_ATTRIBUTE_DECL,
-    CXMLEntityDeclarationKind = XML_ENTITY_DECL,
-    CXMLNamespaceKind = XML_NAMESPACE_DECL,
-    CXMLEntityReferenceKind = XML_ENTITY_REF_NODE,
-    CXMLCDataSectionNodeKind = XML_CDATA_SECTION_NODE
-} CXMLNodeKind;
 
 @interface CXMLNode ()
-
-- (CXMLNodeKind)kind;
 
 @property (nonatomic, assign) xmlNodePtr node;
 @property (nonatomic, assign) BOOL freeNodeOnRelease;
@@ -69,5 +51,11 @@ typedef enum {
 + (Class)nodeClassForLibXMLNode:(xmlNodePtr)inLibXMLNode;
 
 - (void)invalidate;
+
+- (xmlElementType)elementTypeForNodeKind:(CXMLNodeKind)nodeKind;
++ (xmlElementType)elementTypeForNodeKind:(CXMLNodeKind)nodeKind;
+
+- (CXMLNodeKind)nodeKindForElementType:(xmlElementType)elementType;
++ (CXMLNodeKind)nodeKindForElementType:(xmlElementType)elementType;
 
 @end

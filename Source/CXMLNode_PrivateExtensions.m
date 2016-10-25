@@ -35,6 +35,7 @@
 #import "CXMLDocument_PrivateExtensions.h"
 #import "CXMLUnsupportedNode.h"
 
+
 @implementation CXMLNode (CXMLNode_PrivateExtensions)
 
 - (id)initWithLibXMLNode:(xmlNodePtr)inLibXMLNode freeOnDealloc:(BOOL)infreeOnDealloc
@@ -114,5 +115,107 @@ return(self);
         self.node = NULL;
         }
     }
+
++ (xmlElementType)elementTypeForNodeKind:(CXMLNodeKind)nodeKind {
+    
+    switch (nodeKind) {
+        case CXMLInvalidKind:
+            return 0;
+            
+        case CXMLElementKind:
+            return XML_ELEMENT_NODE;
+            
+        case CXMLAttributeKind:
+            return XML_ATTRIBUTE_NODE;
+            
+        case CXMLTextKind:
+            return XML_TEXT_NODE;
+            
+        case CXMLProcessingInstructionKind:
+            return XML_PI_NODE;
+            
+        case CXMLCommentKind:
+            return XML_COMMENT_NODE;
+            
+        case CXMLNotationDeclarationKind:
+            return XML_NOTATION_NODE;
+            
+        case CXMLDTDKind:
+            return XML_DTD_NODE;
+            
+        case CXMLElementDeclarationKind:
+            return XML_ELEMENT_DECL;
+            
+        case CXMLAttributeDeclarationKind:
+            return XML_ATTRIBUTE_DECL;
+            
+        case CXMLEntityDeclarationKind:
+            return XML_ENTITY_DECL;
+            
+        case CXMLNamespaceKind:
+            return XML_NAMESPACE_DECL;
+            
+        case CXMLEntityReferenceKind:
+            return XML_ENTITY_REF_NODE;
+            
+        case CXMLCDataSectionNodeKind:
+            return XML_CDATA_SECTION_NODE;
+    }
+}
+
+- (xmlElementType)elementTypeForNodeKind:(CXMLNodeKind)nodeKind {
+    return [CXMLNode elementTypeForNodeKind:nodeKind];
+}
+
++ (CXMLNodeKind)nodeKindForElementType:(xmlElementType)elementType {
+
+    switch (elementType) {
+        case XML_ELEMENT_NODE:
+            return CXMLElementKind;
+
+        case XML_ATTRIBUTE_NODE:
+            return CXMLAttributeKind;
+            
+        case XML_TEXT_NODE:
+            return CXMLTextKind;
+            
+        case XML_PI_NODE:
+            return CXMLProcessingInstructionKind;
+            
+        case XML_COMMENT_NODE:
+            return CXMLCommentKind;
+            
+        case XML_NOTATION_NODE:
+            return CXMLNotationDeclarationKind;
+            
+        case XML_DTD_NODE:
+            return CXMLDTDKind;
+            
+        case XML_ELEMENT_DECL:
+            return CXMLElementDeclarationKind;
+            
+        case XML_ATTRIBUTE_DECL:
+            return CXMLAttributeDeclarationKind;
+            
+        case XML_ENTITY_DECL:
+            return CXMLEntityDeclarationKind;
+            
+        case XML_NAMESPACE_DECL:
+            return CXMLNamespaceKind;
+            
+        case XML_ENTITY_REF_NODE:
+            return CXMLEntityReferenceKind;
+            
+        case XML_CDATA_SECTION_NODE:
+            return CXMLCDataSectionNodeKind;
+            
+        default:
+            return CXMLInvalidKind;
+    }
+}
+
+- (CXMLNodeKind)nodeKindForElementType:(xmlElementType)elementType {
+    return [CXMLNode nodeKindForElementType:elementType];
+}
 
 @end

@@ -72,8 +72,9 @@ return(theNode);
 
 - (CXMLNodeKind)kind
 {
-NSAssert(_node != NULL, @"CXMLNode does not have attached libxml2 _node.");
-return((CXMLNodeKind)_node->type); // TODO this isn't 100% accurate!
+    NSAssert(_node != NULL, @"CXMLNode does not have attached libxml2 _node.");
+    
+    return [self nodeKindForElementType: _node->type];
 }
 
 - (NSString *)name
@@ -154,7 +155,7 @@ else
 {
 	NSAssert(_node != NULL, @"CXMLNode does not have attached libxml2 _node.");
 	
-	if (_node->type == CXMLAttributeKind)
+	if ([self nodeKindForElementType: _node->type] == CXMLAttributeKind)
 		return 0; // NSXMLNodes of type NSXMLAttributeKind can't have children
 		
 	xmlNodePtr theCurrentNode = _node->children;
@@ -170,7 +171,7 @@ else
 	
 	NSMutableArray *theChildren = [NSMutableArray array];
 	
-	if (_node->type != CXMLAttributeKind) // NSXML Attribs don't have children.
+	if ([self nodeKindForElementType: _node->type] != CXMLAttributeKind) // NSXML Attribs don't have children.
 	{
 		xmlNodePtr theCurrentNode = _node->children;
 		while (theCurrentNode != NULL)

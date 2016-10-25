@@ -34,6 +34,8 @@
 #import "CXMLDocument.h"
 #import "CXMLElement.h"
 
+#import "CXMLNode_PrivateExtensions.h"
+
 @implementation BasicTests
 
 - (void)test_basicXMLTest
@@ -167,6 +169,102 @@
     NSError *theError = NULL;
     CXMLDocument *theXMLDocument = [[CXMLDocument alloc] initWithXMLString:@"<foo>http://website.com?foo=1&bar=2</foo>" options:0 error:&theError];
     XCTAssertNil(theXMLDocument);
+}
+
+- (void)test_nodeKindForElementType
+{
+    
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ELEMENT_NODE], CXMLElementKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ATTRIBUTE_NODE], CXMLAttributeKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_TEXT_NODE], CXMLTextKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_PI_NODE], CXMLProcessingInstructionKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_COMMENT_NODE], CXMLCommentKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_NOTATION_NODE], CXMLNotationDeclarationKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_DTD_NODE], CXMLDTDKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ELEMENT_DECL], CXMLElementDeclarationKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ATTRIBUTE_DECL], CXMLAttributeDeclarationKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ENTITY_DECL], CXMLEntityDeclarationKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_NAMESPACE_DECL], CXMLNamespaceKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ENTITY_REF_NODE], CXMLEntityReferenceKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_CDATA_SECTION_NODE], CXMLCDataSectionNodeKind);
+    
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_ENTITY_NODE], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_DOCUMENT_NODE], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_DOCUMENT_TYPE_NODE], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_DOCUMENT_FRAG_NODE], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_HTML_DOCUMENT_NODE], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_XINCLUDE_START], CXMLInvalidKind);
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_XINCLUDE_END], CXMLInvalidKind);
+    
+#ifdef LIBXML_DOCB_ENABLED
+    XCTAssertEqual([CXMLNode nodeKindForElementType:XML_DOCB_DOCUMENT_NODE], CXMLInvalidKind);
+#endif
+    
+    CXMLNode *node = [CXMLNode new];
+    
+    XCTAssertEqual([node nodeKindForElementType:XML_ELEMENT_NODE], CXMLElementKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_ATTRIBUTE_NODE], CXMLAttributeKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_TEXT_NODE], CXMLTextKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_PI_NODE], CXMLProcessingInstructionKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_COMMENT_NODE], CXMLCommentKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_NOTATION_NODE], CXMLNotationDeclarationKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_DTD_NODE], CXMLDTDKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_ELEMENT_DECL], CXMLElementDeclarationKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_ATTRIBUTE_DECL], CXMLAttributeDeclarationKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_ENTITY_DECL], CXMLEntityDeclarationKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_NAMESPACE_DECL], CXMLNamespaceKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_ENTITY_REF_NODE], CXMLEntityReferenceKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_CDATA_SECTION_NODE], CXMLCDataSectionNodeKind);
+    
+    XCTAssertEqual([node nodeKindForElementType:XML_ENTITY_NODE], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_DOCUMENT_NODE], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_DOCUMENT_TYPE_NODE], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_DOCUMENT_FRAG_NODE], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_HTML_DOCUMENT_NODE], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_XINCLUDE_START], CXMLInvalidKind);
+    XCTAssertEqual([node nodeKindForElementType:XML_XINCLUDE_END], CXMLInvalidKind);
+    
+#ifdef LIBXML_DOCB_ENABLED
+    XCTAssertEqual([node nodeKindForElementType:XML_DOCB_DOCUMENT_NODE], CXMLInvalidKind);
+#endif
+}
+
+- (void)test_elementTypeForNodeKind
+{
+    
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLElementKind], XML_ELEMENT_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLAttributeKind], XML_ATTRIBUTE_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLTextKind], XML_TEXT_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLProcessingInstructionKind], XML_PI_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLCommentKind], XML_COMMENT_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLNotationDeclarationKind], XML_NOTATION_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLDTDKind], XML_DTD_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLElementDeclarationKind], XML_ELEMENT_DECL);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLAttributeDeclarationKind], XML_ATTRIBUTE_DECL);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLEntityDeclarationKind], XML_ENTITY_DECL);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLNamespaceKind], XML_NAMESPACE_DECL);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLEntityReferenceKind], XML_ENTITY_REF_NODE);
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLCDataSectionNodeKind], XML_CDATA_SECTION_NODE);
+    
+    XCTAssertEqual([CXMLNode elementTypeForNodeKind:CXMLInvalidKind], 0);
+    
+    CXMLNode *node = [CXMLNode new];
+    
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLElementKind], XML_ELEMENT_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLAttributeKind], XML_ATTRIBUTE_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLTextKind], XML_TEXT_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLProcessingInstructionKind], XML_PI_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLCommentKind], XML_COMMENT_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLNotationDeclarationKind], XML_NOTATION_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLDTDKind], XML_DTD_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLElementDeclarationKind], XML_ELEMENT_DECL);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLAttributeDeclarationKind], XML_ATTRIBUTE_DECL);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLEntityDeclarationKind], XML_ENTITY_DECL);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLNamespaceKind], XML_NAMESPACE_DECL);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLEntityReferenceKind], XML_ENTITY_REF_NODE);
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLCDataSectionNodeKind], XML_CDATA_SECTION_NODE);
+    
+    XCTAssertEqual([node elementTypeForNodeKind:CXMLInvalidKind], 0);
 }
 
 @end

@@ -31,10 +31,29 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    CXMLInvalidKind,
+    CXMLElementKind,
+    CXMLAttributeKind,
+    CXMLTextKind,
+    CXMLProcessingInstructionKind,
+    CXMLCommentKind,
+    CXMLNotationDeclarationKind,
+    CXMLDTDKind,
+    CXMLElementDeclarationKind,
+    CXMLAttributeDeclarationKind,
+    CXMLEntityDeclarationKind,
+    CXMLNamespaceKind,
+    CXMLEntityReferenceKind,
+    CXMLCDataSectionNodeKind
+} CXMLNodeKind;
+
 @class CXMLDocument;
 
 // NSXMLNode
 @interface CXMLNode : NSObject <NSCopying>
+
+- (CXMLNodeKind)kind;
 
 - (NSString *)name;
 - (NSString *)stringValue;
